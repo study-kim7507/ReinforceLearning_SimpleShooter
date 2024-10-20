@@ -1,19 +1,16 @@
-### ReinforceLearning - SimpleShooter
----
+### <h2>❗  ReinforceLearning - SimpleShooter </h2>
 >  __한양대학교 컴퓨터소프트웨어학부 졸업프로젝트  
-개발 기간 : 2024.03 ~__  
+개발 기간 : 2024.03 ~__
 
 <br>
 
-### 구성원
----
+### <h2>🧑 구성원 </h2>
 > __한양대학교 컴퓨터소프트웨어학부 4학년 김기환  
  한양대학교 컴퓨터소프트웨어학부 4학년 이준수__
 
 <br>
 
-### 프로젝트 소개
----
+### <h2>📚 프로젝트 소개 </h2>
 <br>
 <p align="center">
 <img src="image/process_layout.PNG" width="400" height="200"/>
@@ -33,8 +30,7 @@ __딥러닝 라이브러리 Pytorch와 언리얼엔진을 이용하여 게임 �
 
 <br>
 
-### 시뮬레이션 환경 (클라이언트)
----
+### <h2>🏙️ 시뮬레이션 환경 (클라이언트) </h2>
 좀비 아포칼립스 세상에서 몰려드는 좀비를 막아 전초기지를 방어하는 컨셉을 바탕으로 게임 시뮬레이션 환경을 구현하였습니다.
 - 플레이어는 4개의 무기와 4개의 방어구를 가지고 플레이하게 됩니다.
 - 플레이어는 상대(에이전트)의 무기와 동일한 종류의 방어구를 착용 시 상대의 공격으로 부터 절반의 피해를 입습니다.
@@ -51,8 +47,7 @@ __딥러닝 라이브러리 Pytorch와 언리얼엔진을 이용하여 게임 �
 <br><br>
 
 
-### 모델 (서버)
----
+### <h2>🧠 모델 (서버) </h2>
 State의 차원이 큰 경우 최적의 행동을 뽑아내기 어려운 Q-Learning의 한계를 해결하기 위해 <span style="color:#ffd33d"> Deep Learning과 결합한 DQN 알고리즘 </span>을 바탕으로 시뮬레이션 환경으로부터 전달받은 State의 차원이 큰 경우에도 최적의 행동을 계산해낼 수 있도록 구현하였습니다.  
 
 <br>
@@ -72,6 +67,15 @@ State의 차원이 큰 경우 최적의 행동을 뽑아내기 어려운 Q-Learn
 >    - 에이전트의 회전각도 값(0 ~ 360)을 0 ~ 15의 수로 매핑
 >- Reward
 >    - 이전 State의 거리와 Action을 취한 후의 State의 거리의 줄어드는 양 만큼 Reward를 제공
+<br>
+>### 결과 영상 
+> - 다수의 에이전트들이 각각 가까운 아이템 혹은 플레이어를 향해 이동
+><br>
+>   <img src="image/result_movement.gif" width="600" height="400">
+
+
+<br>
+
 
 <br>
 
@@ -85,11 +89,15 @@ State의 차원이 큰 경우 최적의 행동을 뽑아내기 어려운 Q-Learn
 >- Reward
 >   - 상대(플레이어)의 방어구와 다른 종류의 무기를 착용 시 (온전한 피해를 입힐 수 있음) -> 양의 리워드
 >   - 상대(플레이어)의 무기와 동일한 종류의 방어구 착용 시 (적은 피해를 받을 수 있음) -> 양의 리워드
+<br>
+>### 결과 영상
+>   - 플레이어의 무기에 따라 적절한 방어구로 변경
+><br>
+> <img src="image/result_changeEquipment.gif" width="600" height="400">
 
 <br>
 
-### 디렉토리 구조
----
+### <h2>📁 디렉토리 구조 </h2>
 ```
 RL_SimpleShooter
 ├── RL_SimpleShooter_Clinet(Unreal)             # 시뮬레이션 환경 (클라이언트)
@@ -109,9 +117,26 @@ RL_SimpleShooter
 │   ├── Model.py
 │   ├── Play.py
 │   ├── Train.py
+```
 
-``` 
-### 플레이
----
+<br>
 
+### <h2>🔧 STACKS</h2>
+<div align=center> 
+<img src="https://img.shields.io/badge/c++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white">
+<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> 
+<br>
+<img src="https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white">
+<img src="https://img.shields.io/badge/unrealengine-%23313131.svg?style=for-the-badge&logo=unrealengine&logoColor=white">
+<br>
+<img src="https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white">
+<img src="https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white">
 
+</div>
+<br>
+
+### <h2>🔄 현재 진행 상황 </h2>
+- 장비 변경 모델 학습 중
+- 이동 관련 모델 수정 진행 중, 더욱 복잡한 시뮬레이션 환경에 대응
+    - 장애물을 회피하며 가까운 아이템 혹은 플레이어에게 다가가도록 
+    - State의 경우의 수를 줄여 학습의 효율을 향상시킬 수 있는 방안을 모색 중
