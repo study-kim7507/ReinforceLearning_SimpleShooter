@@ -1,6 +1,6 @@
 ### <h2>❗  ReinforceLearning - SimpleShooter </h2>
 >  __한양대학교 컴퓨터소프트웨어학부 졸업프로젝트  
-개발 기간 : 2024.03 ~__
+개발 기간 : 2024.03 ~ 2024.10 (진행 중)__
 
 <br>
 
@@ -67,11 +67,9 @@ State의 차원이 큰 경우 최적의 행동을 뽑아내기 어려운 Q-Learn
 >    - 에이전트의 회전각도 값(0 ~ 360)을 0 ~ 15의 수로 매핑
 >- Reward
 >    - 이전 State의 거리와 Action을 취한 후의 State의 거리의 줄어드는 양 만큼 Reward를 제공
-<br>
 >### 결과 영상 
-> - 다수의 에이전트들이 각각 가까운 아이템 혹은 플레이어를 향해 이동
-><br>
->   <img src="image/result_movement.gif" width="600" height="400">
+>  - 다수의 에이전트들이 각각 가까운 아이템 혹은 플레이어를 향해 이동
+> <img src="image/result_movement.gif" width="600" height="400">
 
 
 <br>
@@ -89,10 +87,8 @@ State의 차원이 큰 경우 최적의 행동을 뽑아내기 어려운 Q-Learn
 >- Reward
 >   - 상대(플레이어)의 방어구와 다른 종류의 무기를 착용 시 (온전한 피해를 입힐 수 있음) -> 양의 리워드
 >   - 상대(플레이어)의 무기와 동일한 종류의 방어구 착용 시 (적은 피해를 받을 수 있음) -> 양의 리워드
-<br>
 >### 결과 영상
 >   - 플레이어의 무기에 따라 적절한 방어구로 변경
-><br>
 > <img src="image/result_changeEquipment.gif" width="600" height="400">
 
 <br>
