@@ -111,79 +111,6 @@ void AShooterCharacterBase::GetNewItem(TSubclassOf<class AActor> NewItemClass)
 	}
 }
 
-// 0~15에 해당하는 방향으로 라인트레이스
-TArray<FVector> AShooterCharacterBase::PerformLineTraceFromEye()
-{
-	if (!bIsPerfromLineTrace) return TArray<FVector>();
-
-	// 시야 판단을 위해 비교할 트레이스 채널
-	ECollisionChannel Channel = ECollisionChannel::ECC_Visibility;
-
-	FCollisionQueryParams QueryParams;
-	QueryParams.AddIgnoredActor(this);
-	
-	TArray<FVector> Result;
-
-	for (int i = 0; i <= 15; i++)
-	{
-		float Angle;
-		if (i <= 8)
-			Angle = i * 22.5;
-		else if (i <= 15)
-			Angle = (i - 9) * 22.5 - 157.5;
-
-		FVector Start = GetActorLocation();
-
-		// 캐릭터가 Angle 방향으로 회전한 뒤, 1초동안 이동했을 때의 위치
-		// 라인트레이스를 이용하여 해당 방향으로 1초 동안 이동할 경우 장애물에 부딪히는지 감지를 위함
-		FVector End = Start + FRotator(0.0f, Angle, 0.0f).Vector() * GetCharacterMovement()->MaxWalkSpeed;	
-		
-		// 캐릭터가 Angle 방향으로 회전한 뒤, 0.5초동안 이동했을 때의 위치
-		FVector ForwardVector = Start + FRotator(0.0f, Angle, 0.0f).Vector() * GetCharacterMovement()->MaxWalkSpeed * 0.5f;
-
-		FHitResult Hit;
-		bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, Channel, QueryParams);		
-
-		DrawDebugLine(GetWorld(), Start, End, FColor::Red);
-		DrawDebugSphere(GetWorld(), End, 5.0f, 10, FColor::Emerald);
-		DrawDebugSphere(GetWorld(), ForwardVector, 5.0f, 10, FColor::Red);
-		if (bHit)
-		{
-			// 만약, 캐릭터가 Angle 방향으로 회전한 뒤 1초동안 이동할 때, 장애물에 부딪히면 거리를 계산에서 제외 되도록 더미 값 반환 
-			DrawDebugSphere(GetWorld(), Hit.ImpactPoint, 25.f, 10, FColor::Blue);
-			Result.Add(FVector(0.0f, 0.0f, 0.0f));
-		}
-		else
-			Result.Add(ForwardVector);
-	}
-
-	return Result;
-}
-
-bool AShooterCharacterBase::IsPathBlocked()
-{
-	FVector Start = GetMesh()->GetSocketLocation(TEXT("Spine"));
-	FVector End = Start + GetActorForwardVector() * 5000.f;
-
-	ECollisionChannel Channel = ECollisionChannel::ECC_Visibility;
-
-	FCollisionQueryParams QueryParams;
-	QueryParams.AddIgnoredActor(this);
-	QueryParams.AddIgnoredActor(ECC_WorldStatic);
-
-	FHitResult Hit;
-
-	DrawDebugLine(GetWorld(), Start, End, FColor::Blue);
-	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, Channel, QueryParams);
-	if (bHit)
-	{
-		DrawDebugSphere(GetWorld(), Hit.ImpactPoint, 50.f, 50, FColor::Green);
-		return true;
-	}
-
-	return false;
-}
-
 // Called when the game starts or when spawned
 void AShooterCharacterBase::BeginPlay()
 {
@@ -222,8 +149,6 @@ void AShooterCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// PerformLineTraceFromEye();
-	// IsPathBlocked();
 }
 
 // Called to bind functionality to input
@@ -240,13 +165,14 @@ void AShooterCharacterBase::Attack()
 		if (CurrentRangedWeapon != nullptr)
 		{
 			CurrentRangedWeapon->FireWithProjectile(this);
-			OnPullTriggerEvent.Broadcast();
+			return;
 		}	
 		AMeleeWeapon* CurrentMeleeWeapon = Cast<AMeleeWeapon>(CurrentWeapon);
 		if (CurrentMeleeWeapon != nullptr)
 		{
 			CurrentMeleeWeapon->AttackUsingMeleeWeapon(this);
 			bIsAttackUsingMeleeWeapon = true;
+			return;
 		}
 	}
 }

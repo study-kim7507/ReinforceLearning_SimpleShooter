@@ -28,6 +28,7 @@ void ARangedWeapon::Tick(float DeltaTime)
 
 void ARangedWeapon::FireWithProjectile(AShooterCharacterBase* _Owner)
 {
+	if (_Owner == nullptr || _Owner->GetController() == nullptr) return;
 	const FVector StartLocation = ProjectileSpawnPoint->GetComponentLocation();
 	const FVector EndLocation = _Owner->GetController()->GetControlRotation().Vector() + StartLocation;
 	FVector Direction = EndLocation - StartLocation;

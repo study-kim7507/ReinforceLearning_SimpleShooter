@@ -9,9 +9,6 @@ class AArmor;
 class UHealthComponent;
 class UEyeLineTraceComponent;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPullTriggerEvent);
-
-
 UCLASS()
 class RL_SIMPLESHOOTER_API AShooterCharacterBase : public ACharacter
 {
@@ -43,18 +40,6 @@ public:
 	void HandleDestruction();
 	void GetNewItem(TSubclassOf<AActor> NewItemClass);
 
-	UFUNCTION(BlueprintCallable)
-	TArray<FVector> PerformLineTraceFromEye();
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	bool bIsPerfromLineTrace = true;
-
-	UFUNCTION(BlueprintCallable, BlueprintPure)
-	bool IsPathBlocked();
-
-	UPROPERTY(BlueprintAssignable, Category = "Events")
-	FOnPullTriggerEvent OnPullTriggerEvent;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 CurrentWeaponNum = 0;
 
@@ -69,25 +54,27 @@ protected:
 	virtual void BeginPlay() override;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Equipment")
-	TArray<TSubclassOf<AWeaponBase>> HeldWeapons;
+	TArray<TSubclassOf<AWeaponBase>> HeldWeapons;						// 캐릭터가 현재 소지 중인 무기들
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Equipment")
-	TArray<TSubclassOf<AArmor>> HeldArmors;
+	TArray<TSubclassOf<AArmor>> HeldArmors;								// 캐릭터가 현재 소지 중인 방어구들
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UHealthComponent* HealthComponent;
+	UHealthComponent* HealthComponent;									// 캐릭터의 체력을 관리하는 컴포넌트 
 
 public:
-	AWeaponBase* CurrentWeapon;
-	AArmor* CurrentArmor;
+
+	// 현재 캐릭터가 장착 중인 장비들
+	AWeaponBase* CurrentWeapon;					// 현재 캐릭터가 장착 중인 무기
+	AArmor* CurrentArmor;						// 현재 캐릭터가 장착 중인 방어구
 
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USoundBase* HitSound;
+	USoundBase* HitSound;						// 피격 시 재생되는 사운드
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USoundBase* DeathSound;
+	USoundBase* DeathSound;						// 사망 시 재생되는 사운드
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bIsAttackUsingMeleeWeapon = false;
+	bool bIsAttackUsingMeleeWeapon = false;		// 근접 무기 
 };

@@ -105,7 +105,4 @@ void UHealthComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDa
 		if (Defensor->DeathSound != nullptr)
 			UGameplayStatics::PlaySoundAtLocation(GetWorld(), Defensor->DeathSound, Defensor->GetActorLocation());
 	}
-		
-
-	UE_LOG(LogTemp, Warning, TEXT("%d, %d, Current Health : %f, RecvDamage : %f"), AttackerCurrentWeaponNum, DefensorCurrentArmorNum, CurrentHealth, RecvDamage);
 }

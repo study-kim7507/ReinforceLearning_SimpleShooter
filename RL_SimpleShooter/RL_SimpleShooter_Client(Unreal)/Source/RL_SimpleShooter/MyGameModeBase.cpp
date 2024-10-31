@@ -21,7 +21,7 @@ void AMyGameModeBase::ActorDied(AActor* DeadActor)
 		EndGame(false);
 	}
 
-	// 만약 죽은 캐릭터가 우리의 에이전트 캐릭터인 경우 게임 승리
+	// 모든 좀비(에이전트) 캐릭터가 죽으면 게임 승리
 	AAIController* OurAgentAIController = Cast<AAIController>(DeadCharacter->GetController());
 	if (OurAgentAIController != nullptr)
 	{

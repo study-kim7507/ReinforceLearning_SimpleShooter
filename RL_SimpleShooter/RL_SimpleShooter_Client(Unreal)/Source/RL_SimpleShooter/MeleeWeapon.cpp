@@ -28,7 +28,6 @@ void AMeleeWeapon::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 
 	if (OtherActor && OtherActor != this && OtherActor != MyOwnerCharacter)
 	{
-		GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Blue, TEXT("OnOverlap MeleeWeapon"));
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerCharacterInstigator, this, DamageTypeClass);
 	}
 }
@@ -36,9 +35,7 @@ void AMeleeWeapon::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 void AMeleeWeapon::BeginPlay()
 {
 	Super::BeginPlay();
-	// Mesh->OnComponentHit.AddDynamic(this, &AMeleeWeapon::OnHit);
 	Mesh->OnComponentBeginOverlap.AddDynamic(this, &AMeleeWeapon::OnOverlapBegin);
-
 }
 
 void AMeleeWeapon::Tick(float DeltaTime)
