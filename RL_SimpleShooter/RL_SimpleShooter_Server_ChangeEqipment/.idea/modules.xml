@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/RL_SimpleShooter_Server.iml" filepath="$PROJECT_DIR$/.idea/RL_SimpleShooter_Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/RL_SimpleShooter_Server_ChangeEqipment.iml" filepath="$PROJECT_DIR$/.idea/RL_SimpleShooter_Server_ChangeEqipment.iml" />
     </modules>
   </component>
 </project>

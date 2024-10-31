@@ -1,7 +1,6 @@
 import torch
 from GameMaster import GameMaster
 from Communication import networkInit
-import time
 from Model import Qnet
 import threading
 
@@ -28,7 +27,7 @@ def run_agent_for_client(client_address):
     print(f"TEST for client {client_address}")
 
     # Q-net 및 환경 설정
-    episodeNum = ""
+    episodeNum = "0"
     PATH = './result/q_net_' + str(episodeNum) + '.pth'
 
     q = Qnet()
@@ -38,9 +37,6 @@ def run_agent_for_client(client_address):
     q_target.load_state_dict(q.state_dict())
 
     score = 0.0
-    startTime = time.time()
-    saveResultTime = []
-    saveResultScore = []
 
     # 게임 시작
     s = env.reset()
@@ -54,11 +50,6 @@ def run_agent_for_client(client_address):
 
         # 보상 업데이트
         score += r
-
-        # TODO: 진행정도에 따른 점수 시각화
-        currentTime = time.time() - startTime
-        saveResultTime.append(currentTime)
-        saveResultScore.append(score)
 
 # 새로운 클라이언트가 연결되었을 때 호출되는 함수
 def handle_new_client(client_address):

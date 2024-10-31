@@ -25,27 +25,20 @@ class GameMaster:
         self.Receive_Buffer.pop(0)
 
         # action을 취한 후, 클라이언트로부터 받은 데이터를 바탕으로 reward 계산.
-        state = np.array(packet[0:5])
+        state = np.array(packet[0:4])
 
-        enemyWeaponNum = state[0]
-        ourAgentArmorNum = state[1]
-        ourAgentWeaponNum = state[2]
-        enemyArmorNum = state[3]
-        canEquipMeleeWeapon = state[4]
-        doneMask = packet[5]
+        ourAgentArmorNum = state[0]
+        ourAgentWeaponNum = state[1]
+        enemyArmorNum = state[2]
+        enemyWeaponNum = state[3]
+
+        doneMask = packet[4]
 
         reward = 0
-
-        if canEquipMeleeWeapon:
-            if ourAgentWeaponNum == 4 and ourAgentArmorNum == enemyWeaponNum:
-                reward += 1
-            else:
-                reward -= 1
+        if ourAgentWeaponNum != enemyArmorNum and ourAgentArmorNum == enemyWeaponNum:
+            reward += 10
         else:
-            if ourAgentWeaponNum != 4 and ourAgentWeaponNum != enemyArmorNum and ourAgentArmorNum == enemyWeaponNum:
-                reward += 1
-            else:
-                reward -= 1
+            reward -= 10
 
         # 에피소드 종료 조건.
         done = True if doneMask else False
@@ -59,7 +52,7 @@ class GameMaster:
         while len(self.Receive_Buffer) <= 0:
             time.sleep(0.1)
         state = eval(self.Receive_Buffer[0].decode('utf-8'))
-        state = np.array(state[0:5])
+        state = np.array(state[0:4])
 
         self.Receive_Buffer.pop()
 
