@@ -25,27 +25,25 @@ class GameMaster:
         self.Receive_Buffer.pop(0)
 
         # action을 취한 후, 클라이언트로부터 받은 데이터를 바탕으로 reward 계산.
-        state = np.array(packet[0:7])
+        state = np.array(packet[0:3])
 
-        ourAgentDirection = state[0]
-        enemyDirection = state[1]
-        targetXPos = state[2]
-        targetYPos = state[3]
-        agentXPos = state[4]
-        agentYPos = state[5]
-        distance = state[6]
-        doneMask = packet[7]
+        prevOptimalDirection = state[0]
+        OurAgentCurrentDirection = state[1]
+        currentOptimalDirection = state[2]                    # 장애물에 부딪히지 않는 타겟에 가장 가까워질 수 있는 방향 (0 ~ 15)
+        doneMask = packet[3]
 
-        # action을 취하기 전 state에서 추출
-        prev_dist = prev_state[6]
-        diff_dist = prev_dist - distance
+        distance = abs(prevOptimalDirection - OurAgentCurrentDirection)
+        distance = min(distance, abs(distance - 16))
 
+        # 거리 계산 후 reward 초기화
         reward = 0
 
-        if (diff_dist >= 250):
-            reward += (diff_dist * 3)
-
-        reward += diff_dist
+        if distance <= 2:
+            # 올바른 방향일 경우 : 양의 리워드
+            reward += 100 * (0.05 ** distance)
+        else:
+            # 올바른 방향이 아닐 경우
+            reward += -100 * (0.05 ** abs(2-distance))
 
         # 에피소드 종료 조건.
         done = True if doneMask else False
@@ -59,7 +57,7 @@ class GameMaster:
         while len(self.Receive_Buffer) <= 0:
             time.sleep(0.1)
         state = eval(self.Receive_Buffer[0].decode('utf-8'))
-        state = np.array(state[0:7])
+        state = np.array(state[0:3])
 
         self.Receive_Buffer.pop()
 

@@ -19,18 +19,6 @@ batch_size = 32
 Send_Buffers = {}
 Receive_Buffers = {}
 
-'''
-# Q-net 및 환경 설정
-episodeNum = 1500
-PATH = './result/q_net_' + str(episodeNum) + '.pth'
-
-q = Qnet().to(device)
-q.load_state_dict(torch.load(PATH))
-
-q_target = Qnet().to(device)
-q_target.load_state_dict(q.state_dict())
-'''
-
 # Q-networks 및 옵티마이저 설정
 q = Qnet().to(device)
 q_target = Qnet().to(device)
@@ -70,8 +58,7 @@ def client_interaction(client_address):
         print(f"Client {client_address} - Episode: {n_epi}")
 
         # epsilon을 점차적으로 감소시키기 위한 스케줄링
-        epsilon = max(0.01, 1.0 - 0.99 * (n_epi / 1500))  # Linear annealing from 100% to 1%
-
+        epsilon = max(0.01, 1.0 - 0.99 * (n_epi / 500))  # Linear annealing from 100% to 1%
 
         # 환경 초기화
         s = env.reset()
@@ -111,7 +98,6 @@ def client_interaction(client_address):
         # 타겟 네트워크 업데이트
         if n_epi % 2 == 0:
             q_target.load_state_dict(q.state_dict())
-
 
         # 50번의 에피소드마다 모델 저장
         if n_epi % 50 == 0:
