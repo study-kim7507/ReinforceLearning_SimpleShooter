@@ -69,7 +69,6 @@ TArray<FVector> AOurAgentCharacter::PerformLineTraceFromEye(FVector CurrentLocat
 	QueryParams.AddIgnoredActor(this);
 
 
-	GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red, TEXT("What"));
 	TArray<FVector> Result;
 
 	for (int i = 0; i <= 15; i++)

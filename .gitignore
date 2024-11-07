@@ -72,3 +72,6 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Ignore the Content folder
+RL_SimpleShooter/RL_SimpleShooter_Client(Unreal)/Content/
